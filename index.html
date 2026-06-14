@@ -7,13 +7,12 @@
     <style>
         :root {
             --primary: #0f2537;      
-            --secondary: #1d3d54;    
             --accent: #00a8cc;       
             --bg-dark: #11141a;     
             --slide-bg: #ffffff;     
             --text-main: #2c3e50;    
-            --text-muted: #5a6c7d;
-            --border: #d1dbe5; 
+            --text-muted: #7f8c8d;
+            --border-light: #eaeded;
         }
 
         * {
@@ -34,7 +33,7 @@
             align-items: center;
         }
 
-        /* 16:9 Fullscreen Slide Framework */
+        /* 16:9 Presentation Viewport */
         .presentation-wrapper {
             width: 100vw;
             height: 100vh;
@@ -54,10 +53,10 @@
             }
         }
 
-        /* Top Progress Line */
+        /* Top Bar Indicator */
         .progress-container {
             width: 100%;
-            height: 5px;
+            height: 4px;
             background: rgba(0,0,0,0.05);
             position: absolute;
             top: 0;
@@ -72,79 +71,59 @@
             transition: width 0.3s ease;
         }
 
-        /* Slide Control Engine */
+        /* Slide Engine Core */
         .slide {
             display: none; 
             width: 100%;
             height: 100%;
             flex-direction: column;
             justify-content: space-between;
-            padding: 4vh 5vw 3vh 5vw;
+            padding: 5vh 5vw 3vh 5vw;
         }
 
         .slide.active {
             display: flex; 
         }
 
-        /* Standard Slide Header Layout */
-        .slide-header-block {
+        /* Header Layout */
+        .header-container {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 2.5vh;
-            border-bottom: 2px solid var(--accent);
-            padding-bottom: 1vh;
+            margin-bottom: 2vh;
         }
 
-        .alten-tag {
-            font-size: 14pt;
+        .alten-brand {
+            font-size: 13pt;
             font-weight: 800;
             color: var(--primary);
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
-        .slide-main-title {
-            font-size: 22pt;
+        /* Typography & Layout elements from PDF */
+        .main-title {
+            font-size: 24pt;
             color: var(--primary);
-            font-weight: 600;
+            font-weight: 700;
+            margin-bottom: 2px;
         }
 
-        .slide-subtitle {
+        .sub-title-desc {
             font-size: 11pt;
             color: var(--text-muted);
-            margin-top: 2px;
+            margin-bottom: 2vh;
         }
 
-        /* Core Structure Elements */
-        .slide-body {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            min-height: 0; /* Allows inner grids to scale nicely */
-        }
-
-        h1 { font-size: 28pt; color: var(--primary); font-weight: 700; margin-bottom: 2px; }
-        h2 { font-size: 14pt; color: var(--secondary); font-weight: 500; margin-bottom: 1.5vh; }
-        h3 { font-size: 11pt; color: var(--primary); margin-bottom: 1vh; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
-        p { font-size: 11pt; line-height: 1.5; color: var(--text-main); }
+        h1 { font-size: 26pt; color: var(--primary); font-weight: 700; }
+        h2 { font-size: 14pt; color: var(--text-muted); font-weight: 400; margin-bottom: 3vh; }
+        h3 { font-size: 11pt; color: var(--primary); margin-bottom: 1.2vh; text-transform: uppercase; letter-spacing: 0.5px; }
         
-        .about-me-desc {
-            font-style: italic;
-            color: var(--text-muted);
-            border-left: 4px solid var(--accent);
-            padding-left: 15px;
-            font-size: 11pt;
-            margin-top: 2vh;
-            line-height: 1.5;
-        }
-
-        /* Unordered Lists Reset & Style */
+        /* Lists exact format matching the source checks */
         ul { list-style: none; }
         ul li {
             position: relative;
-            padding-left: 18px;
-            margin-bottom: 0.8vh;
+            padding-left: 22px;
+            margin-bottom: 1vh;
             font-size: 10.5pt;
             color: var(--text-main);
             line-height: 1.4;
@@ -154,64 +133,93 @@
             position: absolute;
             left: 0;
             color: var(--accent);
-            font-size: 10pt;
-            top: 0px;
+            font-size: 11pt;
+            font-weight: bold;
+            top: -1px;
         }
 
-        /* Grid Layouts */
+        /* Layout Frameworks */
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4vw; }
-        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5vw; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2vw; }
         
-        /* Containers & Boxes */
-        .card {
-            background: #fafbfc;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 2vh 1.5vw;
+        /* Clean content containers */
+        .content-box {
+            display: flex;
+            flex-direction: column;
         }
 
-        .img-placeholder {
-            background: #eef2f5;
-            border: 2px dashed #bdc3c7;
-            border-radius: 6px;
+        .img-box {
+            background: #f2f4f4;
+            border: 1px solid #d5dbdb;
+            border-radius: 4px;
             display: flex;
             justify-content: center;
             align-items: center;
             color: #7f8c8d;
-            font-size: 14pt;
+            font-size: 13pt;
             font-weight: bold;
             height: 100%;
-            min-height: 22vh;
+            min-height: 25vh;
         }
 
-        .highlight-banner {
-            background: #e6f7fa;
-            border-left: 5px solid var(--accent);
-            padding: 1.5vh 1.5vw;
-            border-radius: 0 6px 6px 0;
+        /* Bottom highlight section styles matching verbatim */
+        .bottom-highlight {
+            border-top: 2px solid var(--accent);
+            padding-top: 1.5vh;
             margin-top: auto;
         }
-        .highlight-banner strong { color: var(--primary); text-transform: uppercase; font-size: 9pt; letter-spacing: 0.5px; display: block; margin-bottom: 2px; }
-
-        .career-objective-box {
-            background: var(--primary);
-            color: white;
-            padding: 2vh 2vw;
-            border-radius: 6px;
-            margin-top: auto;
-            border-left: 5px solid var(--accent);
+        .bottom-highlight span {
+            font-size: 9pt;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 2px;
         }
-        .career-objective-box strong { color: var(--accent); text-transform: uppercase; font-size: 9pt; display: block; margin-bottom: 4px; }
-        .career-objective-box p { color: white; font-style: italic; font-size: 11pt; }
+        .bottom-highlight p {
+            font-size: 11pt;
+            line-height: 1.4;
+            color: var(--text-main);
+        }
 
-        /* Embedded Language & Tech Badges */
-        .badge-row { display: flex; gap: 10px; margin-top: 0.5vh; }
-        .badge { background: var(--secondary); color: white; padding: 4px 10px; border-radius: 4px; font-size: 9.5pt; font-weight: 500; }
-        .badge.native { background: var(--primary); }
-        .badge.french { background: var(--accent); color: var(--primary); font-weight: bold; }
+        .objective-banner {
+            border-top: 2px solid var(--accent);
+            padding-top: 1.5vh;
+            margin-top: auto;
+        }
+        .objective-banner span {
+            font-size: 9pt;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 2px;
+        }
+        .objective-banner p {
+            font-size: 11pt;
+            font-style: italic;
+            color: var(--text-main);
+        }
 
-        /* Interactive Controls Overlay */
-        .navigation-overlay {
+        /* Languages layout section */
+        .lang-container {
+            display: flex;
+            gap: 25px;
+            margin-top: 1vh;
+        }
+        .lang-item {
+            font-size: 10.5pt;
+        }
+        .lang-item strong {
+            display: block;
+            font-size: 12pt;
+            color: var(--primary);
+        }
+
+        /* Keyboard / UI Navigation Controls Overlay */
+        .nav-controls {
             position: absolute;
             bottom: 2.5vh;
             right: 5vw;
@@ -234,14 +242,14 @@
         }
         .nav-btn:hover { background: var(--accent); color: var(--primary); }
 
-        /* Standardized Slide Footer */
+        /* Document Footer Layout matching PDF */
         .slide-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 9pt;
-            color: #95a5a6;
-            border-top: 1px solid #eef2f5;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-light);
             padding-top: 1vh;
             margin-top: auto;
         }
@@ -250,59 +258,58 @@
 <body>
 
     <div class="presentation-wrapper">
-        <!-- Horizontal Progress Topbar -->
+        <!-- Horizontal Top Progress -->
         <div class="progress-container">
             <div class="progress-bar" id="progress"></div>
         </div>
 
-        <!-- Navigation System Overlay -->
-        <div class="navigation-overlay">
+        <!-- Navigation Buttons System -->
+        <div class="nav-controls">
             <button class="nav-btn" onclick="prevSlide()">◀ Previous</button>
             <button class="nav-btn" onclick="nextSlide()">Next ▶</button>
         </div>
 
-        <!-- SLIDE 1 – ABOUT ME -->
+        <!-- SLIDE 1: ABOUT ME -->
         <section class="slide active">
-            <div class="slide-header-block">
-                <div>
-                    <div class="slide-main-title">About Me</div>
-                    <div class="slide-subtitle">Candidate Presentation for Aerospace Quality & Manufacturing Engineering</div>
-                </div>
-                <div class="alten-tag">ALTEN TOULOUSE</div>
+            <div class="header-container">
+                <div class="main-title">About Me</div>
+                <div class="alten-brand">ALTEN TOULOUSE</div>
             </div>
+            
+            <div class="sub-title-desc">Candidate Presentation for Aerospace Quality & Manufacturing Engineering</div>
             
             <div class="slide-body">
                 <h1>David Garcia Lebrato</h1>
                 <h2>Mechanical & Manufacturing-Oriented Engineer</h2>
                 
-                <div class="grid-2" style="margin-top: 1vh;">
-                    <div>
-                        <h3 style="margin-top: 0;">Education Background</h3>
-                        <ul style="margin-bottom: 2.5vh;">
+                <p style="font-size: 11pt; color: var(--text-main); line-height: 1.5; margin-bottom: 4vh; max-width: 90%;">
+                    Over three years of aerospace quality engineering experience, uniquely combined with high-performance motorsport exposure and advanced composite manufacturing validation.
+                </p>
+                
+                <div class="grid-2">
+                    <div class="content-box">
+                        <h3>Education Background</h3>
+                        <ul style="margin-bottom: 3vh;">
                             <li>MSc Motorsport Engineering Oxford Brookes University</li>
                             <li>Industrial Design & Product Development Engineering</li>
                         </ul>
 
                         <h3>Language Proficiency</h3>
-                        <div class="badge-row" style="margin-bottom: 2.5vh;">
-                            <span class="badge native">Spanish: Native</span>
-                            <span class="badge">English: C1</span>
-                            <span class="badge french">French: B1/B2</span>
+                        <div class="lang-container">
+                            <div class="lang-item">Spanish <strong>Native</strong></div>
+                            <div class="lang-item">English <strong>C1</strong></div>
+                            <div class="lang-item">French <strong>B1/B2</strong></div>
                         </div>
                     </div>
 
-                    <div>
+                    <div class="content-box">
                         <h3>Key Target Areas</h3>
-                        <ul style="margin-bottom: 0;">
-                            <li style="margin-bottom: 1.5vh;"><strong>Aerospace Manufacturing & Quality</strong><br><span style="font-size: 9.5pt; color: var(--text-muted);">Process qualification, FMEA, root-cause analysis.</span></li>
-                            <li style="margin-bottom: 1.5vh;"><strong>Industrialisation & Production Support</strong><br><span style="font-size: 9.5pt; color: var(--text-muted);">Shopfloor validation, readiness, technical documentation.</span></li>
-                            <li><strong>Composites & Structures</strong><br><span style="font-size: 9.5pt; color: var(--text-muted);">Advanced composite manufacturing, tooling & NDT.</span></li>
+                        <ul>
+                            <li style="margin-bottom: 1.5vh;"><strong>Aerospace Manufacturing & Quality</strong><br><span style="color: var(--text-muted); font-size: 10pt;">Process qualification, FMEA, root-cause analysis.</span></li>
+                            <li style="margin-bottom: 1.5vh;"><strong>Industrialisation & Production Support</strong><br><span style="color: var(--text-muted); font-size: 10pt;">Shopfloor validation, readiness, technical documentation.</span></li>
+                            <li><strong>Composites & Structures</strong><br><span style="color: var(--text-muted); font-size: 10pt;">Advanced composite manufacturing, tooling & NDT.</span></li>
                         </ul>
                     </div>
-                </div>
-                
-                <div class="about-me-desc">
-                    Over three years of aerospace quality engineering experience, uniquely combined with high-performance motorsport exposure and advanced composite manufacturing validation.
                 </div>
             </div>
 
@@ -313,20 +320,19 @@
         </section>
 
 
-        <!-- SLIDE 2 – PROFESSIONAL EXPERIENCE -->
+        <!-- SLIDE 2: PROFESSIONAL EXPERIENCE -->
         <section class="slide">
-            <div class="slide-header-block">
-                <div>
-                    <div class="slide-main-title">Professional Experience</div>
-                    <div class="slide-subtitle">Driving process safety and quality system compliance in the aerospace sector</div>
-                </div>
-                <div class="alten-tag">ALTEN TOULOUSE</div>
+            <div class="header-container">
+                <div class="main-title">Professional Experience</div>
+                <div class="alten-brand">ALTEN TOULOUSE</div>
             </div>
             
+            <div class="sub-title-desc">Driving process safety and quality system compliance in the aerospace sector</div>
+            
             <div class="slide-body">
-                <div style="margin-bottom: 2vh;">
-                    <span style="background: var(--primary); color: white; padding: 3px 8px; border-radius: 3px; font-size: 9pt; font-weight: bold; vertical-align: middle; margin-right: 8px;">3+ YEARS EXPERIENCE</span>
-                    <span style="font-size: 15pt; font-weight: 700; color: var(--primary); vertical-align: middle;">Quality Engineer – Airgrup (Aerospace Supplier)</span>
+                <div style="margin-bottom: 3vh;">
+                    <h1 style="font-size: 20pt; color: var(--primary);">Quality Engineer</h1>
+                    <h2 style="font-size: 13pt; color: var(--text-muted); margin-bottom: 0;">Airgrup (Aerospace Supplier) <span style="font-size: 10pt; color: var(--accent); font-weight: bold; margin-left: 10px;">3+ YEARS EXPERIENCE</span></h2>
                 </div>
                 
                 <div class="grid-2" style="flex: 1; min-height: 0;">
@@ -342,17 +348,18 @@
                             </ul>
                         </div>
                         
-                        <div class="highlight-banner">
-                            <strong>Core Competence Acquired</strong>
+                        <div class="bottom-highlight">
+                            <span>Core Competence Acquired</span>
                             <p>Deep understanding of how high-level engineering requirements are translated directly into repeatable and controlled manufacturing processes.</p>
                         </div>
                     </div>
 
-                    <div style="display: flex; flex-direction: column; gap: 2vh;">
-                        <div class="img-placeholder">600 × 400</div>
-                        <div class="card">
+                    <div style="display: flex; flex-direction: column; gap: 2.5vh;">
+                        <div class="img-box">600 × 400</div>
+                        
+                        <div class="content-box">
                             <h3>Key Customer Interface Exposure</h3>
-                            <ul class="grid-2" style="margin-top: 5px;">
+                            <ul class="grid-2" style="gap: 10px 20px;">
                                 <div>
                                     <li>AIRBUS</li>
                                     <li>BOEING</li>
@@ -375,21 +382,20 @@
         </section>
 
 
-        <!-- SLIDE 3 – MOTORSPORT EXPERIENCE -->
+        <!-- SLIDE 3: MOTORSPORT EXPERIENCE -->
         <section class="slide">
-            <div class="slide-header-block">
-                <div>
-                    <div class="slide-main-title">Motorsport & High-Performance Experience</div>
-                    <div class="slide-subtitle">Leveraging agile, highly demanding development cycles to optimize structural systems</div>
-                </div>
-                <div class="alten-tag">ALTEN TOULOUSE</div>
+            <div class="header-container">
+                <div class="main-title">Motorsport & High-Performance Experience</div>
+                <div class="alten-brand">ALTEN TOULOUSE</div>
             </div>
+            
+            <div class="sub-title-desc">Leveraging agile, highly demanding development cycles to optimize structural systems</div>
             
             <div class="slide-body">
                 <div class="grid-2" style="flex: 1; min-height: 0;">
-                    <div style="display: flex; flex-direction: column; gap: 2vh; justify-content: space-between;">
-                        <div class="card">
-                            <h3>Formula Student - Chassis Department Lead</h3>
+                    <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                        <div style="margin-bottom: 2vh;">
+                            <h3 style="font-size: 12pt; color: var(--primary); margin-bottom: 1vh;">Formula Student - Chassis Department Lead</h3>
                             <ul>
                                 <li><strong>Team Coordination:</strong> Managed timeline, tasks and planning for structured groups.</li>
                                 <li><strong>Structural Manufacturing:</strong> Designed and validated metallic/composite chassis frames.</li>
@@ -397,8 +403,8 @@
                             </ul>
                         </div>
 
-                        <div class="card">
-                            <h3>Oxford Brookes Racing - Structures & Composites</h3>
+                        <div style="margin-bottom: 2vh;">
+                            <h3 style="font-size: 12pt; color: var(--primary); margin-bottom: 1vh;">Oxford Brookes Racing - Structures & Composites</h3>
                             <ul>
                                 <li><strong>Carbon Fibre Processing:</strong> Practical work in composite lamination, vacuum bagging.</li>
                                 <li><strong>Composite Inspection & NDT:</strong> Implemented structures quality verification checks.</li>
@@ -406,14 +412,14 @@
                             </ul>
                         </div>
 
-                        <div class="highlight-banner" style="margin-top: 0;">
-                            <strong>High Performance Mindset</strong>
+                        <div class="bottom-highlight">
+                            <span>High Performance Mindset</span>
                             <p>Demonstrated capacity to deliver optimal engineering outcomes where product safety, precision manufacturing speed, and structural performance are balanced simultaneously.</p>
                         </div>
                     </div>
 
                     <div style="display: flex; flex-direction: column;">
-                        <div class="img-placeholder" style="height: 100%;">600 × 400</div>
+                        <div class="img-box" style="height: 100%;">600 × 400</div>
                     </div>
                 </div>
             </div>
@@ -425,21 +431,20 @@
         </section>
 
 
-        <!-- SLIDE 4 – TECHNICAL SKILLS -->
+        <!-- SLIDE 4: TECHNICAL SKILLS -->
         <section class="slide">
-            <div class="slide-header-block">
-                <div>
-                    <div class="slide-main-title">Technical & Engineering Skills</div>
-                    <div class="slide-subtitle">A balanced skillset bridging advanced production methods and quality assurance tools</div>
-                </div>
-                <div class="alten-tag">ALTEN TOULOUSE</div>
+            <div class="header-container">
+                <div class="main-title">Technical & Engineering Skills</div>
+                <div class="alten-brand">ALTEN TOULOUSE</div>
             </div>
+            
+            <div class="sub-title-desc">A balanced skillset bridging advanced production methods and quality assurance tools</div>
             
             <div class="slide-body" style="justify-content: center;">
                 <div class="grid-3">
                     <!-- Column 1 -->
-                    <div class="card">
-                        <h3 style="background: var(--primary); color: white; padding: 6px 12px; margin: -2vh -1.5vw 1.5vh -1.5vw; border-radius: 6px 6px 0 0;">Manufacturing</h3>
+                    <div class="content-box">
+                        <h3 style="border-bottom: 2px solid var(--primary); padding-bottom: 5px; margin-bottom: 2vh;">Manufacturing</h3>
                         <ul>
                             <li><strong>Industrialisation:</strong> Seamless integration from drawing to physical system execution.</li>
                             <li><strong>Process Validation:</strong> Verification of machine inputs, setup, and stability metrics.</li>
@@ -450,8 +455,8 @@
                     </div>
 
                     <!-- Column 2 -->
-                    <div class="card">
-                        <h3 style="background: var(--secondary); color: white; padding: 6px 12px; margin: -2vh -1.5vw 1.5vh -1.5vw; border-radius: 6px 6px 0 0;">Quality Assurance</h3>
+                    <div class="content-box">
+                        <h3 style="border-bottom: 2px solid var(--primary); padding-bottom: 5px; margin-bottom: 2vh;">Quality Assurance</h3>
                         <ul>
                             <li><strong>Root Cause Analysis:</strong> Proficient with Ishikawa diagrams, 5-Whys, 8D.</li>
                             <li><strong>FMEA Methodologies:</strong> Designing out process failure risks preemptively.</li>
@@ -462,8 +467,8 @@
                     </div>
 
                     <!-- Column 3 -->
-                    <div class="card">
-                        <h3 style="background: var(--accent); color: var(--primary); padding: 6px 12px; margin: -2vh -1.5vw 1.5vh -1.5vw; border-radius: 6px 6px 0 0;">Materials & Structures</h3>
+                    <div class="content-box">
+                        <h3 style="border-bottom: 2px solid var(--primary); padding-bottom: 5px; margin-bottom: 2vh;">Materials & Structures</h3>
                         <ul>
                             <li><strong>Composite Fabrication:</strong> In-depth knowledge of carbon/epoxy layups and cures.</li>
                             <li><strong>Aerospace Metallurgy:</strong> Structural checks, welding parameters, and finishes.</li>
@@ -482,19 +487,18 @@
         </section>
 
 
-        <!-- SLIDE 5 – WHY FRANCE & WHY ALTEN -->
+        <!-- SLIDE 5: WHY FRANCE & WHY ALTEN -->
         <section class="slide">
-            <div class="slide-header-block">
-                <div>
-                    <div class="slide-main-title">Why France & ALTEN?</div>
-                    <div class="slide-subtitle">Establishing professional and geographic alignment for long-term career growth</div>
-                </div>
-                <div class="alten-tag">ALTEN TOULOUSE</div>
+            <div class="header-container">
+                <div class="main-title">Why France & ALTEN?</div>
+                <div class="alten-brand">ALTEN TOULOUSE</div>
             </div>
             
+            <div class="sub-title-desc">Establishing professional and geographic alignment for long-term career growth</div>
+            
             <div class="slide-body">
-                <div class="grid-2" style="margin-bottom: 2vh;">
-                    <div class="card">
+                <div class="grid-2" style="margin-bottom: 3vh;">
+                    <div class="content-box">
                         <h3>Why France (Toulouse)?</h3>
                         <ul>
                             <li><strong>Global Aerospace Capital:</strong> Strong interest in building a long-term engineering career within France's world-leading aerospace cluster.</li>
@@ -504,7 +508,7 @@
                         </ul>
                     </div>
 
-                    <div class="card">
+                    <div class="content-box">
                         <h3>Why ALTEN?</h3>
                         <ul>
                             <li><strong>Project Diversity:</strong> Direct exposure to world-class OEMs and top-tier aerospace suppliers across multi-year contracts.</li>
@@ -515,8 +519,8 @@
                     </div>
                 </div>
 
-                <div class="career-objective-box">
-                    <strong>My Career Objective</strong>
+                <div class="objective-banner">
+                    <span>My Career Objective</span>
                     <p>"To actively contribute to major aerospace programmes while continuing to develop as a manufacturing and quality engineer within an international environment."</p>
                 </div>
             </div>
@@ -528,7 +532,7 @@
         </section>
     </div>
 
-    <!-- JavaScript Presentation Engine -->
+    <!-- Script Slide Navigation Engine -->
     <script>
         let currentSlideIdx = 0;
         const slides = document.querySelectorAll('.slide');
