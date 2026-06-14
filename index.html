@@ -26,35 +26,63 @@
         body {
             background-color: #111;
             color: var(--text-dark);
+            overflow: hidden; /* Prevents vertical scrolling of the page */
+            height: 100vh;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            justify-content: flex-start;
-            padding: 40px 20px;
-            min-height: 100vh;
         }
 
+        /* Presentation Wrapper */
         .presentation-container {
-            width: 100%;
-            max-width: 1100px;
-        }
-
-        /* Slide Layout and Aspect Ratio (16:9 feel) */
-        .slide {
-            background: var(--bg-light);
-            border-radius: 8px;
-            box-shadow: 0 12px 40px rgba(0,0,0,0.5);
-            width: 100%;
-            min-height: 620px;
-            margin-bottom: 60px;
+            width: 100vw;
+            height: 100vh;
+            max-width: 1200px;
+            max-height: 750px;
             position: relative;
-            overflow: hidden;
+            background: var(--bg-light);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
             display: flex;
             flex-direction: column;
-            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* Slide Header Banner */
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background: rgba(0,0,0,0.1);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--accent);
+            width: 20%; /* Controlled by JS */
+            transition: width 0.3s ease;
+        }
+
+        /* Slide Engine */
+        .slide {
+            display: none; /* Hidden by default */
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .slide.active {
+            display: flex; /* Only active slide shows */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.99); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Slide Header */
         .slide-header {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: var(--text-light);
@@ -84,10 +112,12 @@
 
         /* Slide Content Area */
         .slide-content {
-            padding: 40px;
+            padding: 35px 40px;
             flex: 1;
             display: flex;
             flex-direction: column;
+            justify-content: center; /* Centers content vertically inside 16:9 box */
+            overflow-y: auto;
         }
 
         /* Slide Footer */
@@ -107,24 +137,22 @@
             font-weight: bold;
         }
 
-        /* Grid Frameworks */
+        /* Grid Layouts */
         .grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
-            height: 100%;
         }
 
         .grid-3 {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 20px;
-            height: 100%;
         }
 
-        /* Typography & General Components */
+        /* Typography & Components */
         p.intro-text {
-            font-size: 11pt;
+            font-size: 12pt;
             line-height: 1.6;
             color: #4f5f6f;
             margin-bottom: 20px;
@@ -139,8 +167,6 @@
             margin-bottom: 15px;
             border-bottom: 2px solid var(--border-color);
             padding-bottom: 5px;
-            display: flex;
-            align-items: center;
         }
 
         ul {
@@ -165,7 +191,6 @@
             top: 2px;
         }
 
-        /* Unique Cards & Boxes */
         .card {
             background: var(--card-bg);
             border-radius: 6px;
@@ -179,7 +204,7 @@
             border-left: 5px solid var(--accent);
             padding: 15px 20px;
             border-radius: 0 6px 6px 0;
-            margin-top: auto;
+            margin-top: 15px;
         }
 
         .learning-box h4 {
@@ -196,7 +221,7 @@
             line-height: 1.5;
         }
 
-        /* Specific Elements for Slide 1 */
+        /* Profile Styles */
         .profile-title h1 {
             font-size: 26pt;
             color: var(--primary);
@@ -219,13 +244,12 @@
             margin-top: 5px;
         }
 
-        /* Callout Big Banner */
         .objective-banner {
             background: var(--primary);
             color: white;
             padding: 20px;
             border-radius: 6px;
-            margin-top: auto;
+            margin-top: 20px;
             border-right: 4px solid var(--accent);
         }
         .objective-banner h4 {
@@ -235,18 +259,42 @@
             margin-bottom: 5px;
             letter-spacing: 1px;
         }
-        .objective-banner p {
-            font-size: 11pt;
-            font-style: italic;
+
+        /* Navigation Controls Overlay */
+        .controls {
+            position: absolute;
+            bottom: 65px;
+            right: 40px;
+            display: flex;
+            gap: 10px;
+            z-index: 100;
         }
 
-        /* Responsive Fixes */
-        @media (max-width: 850px) {
-            .grid-2, .grid-3 {
-                grid-template-columns: 1fr;
-            }
-            .slide {
-                min-height: auto;
+        .btn {
+            background: rgba(15, 37, 55, 0.85);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 10pt;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .btn:hover {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        /* Responsive adaptation for presentation window */
+        @media (max-width: 1200px) {
+            .presentation-container {
+                width: 100vw;
+                height: 100vh;
+                max-height: none;
+                max-width: none;
             }
         }
     </style>
@@ -254,8 +302,19 @@
 <body>
 
     <div class="presentation-container">
+        <!-- Top progress line -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progress"></div>
+        </div>
 
-        <section class="slide">
+        <!-- Navigation buttons UI -->
+        <div class="controls">
+            <button class="btn" onclick="prevSlide()">◀ Prev</button>
+            <button class="btn" onclick="nextSlide()">Next ▶</button>
+        </div>
+
+        <!-- SLIDE 1: ABOUT ME -->
+        <section class="slide active">
             <div class="slide-header">
                 <h2>Candidate Profile</h2>
                 <span class="slide-counter">Slide 1 / 5</span>
@@ -269,15 +328,15 @@
                             <p style="margin-top: 5px; color: #7f8c8d; font-size: 11pt;">Industrial Design & Product Development Engineer</p>
                         </div>
                         
-                        <div style="margin-top: 20px;">
+                        <div style="margin-top: 15px;">
                             <p class="intro-text">
                                 "Mechanical and manufacturing-oriented engineer with over three years of aerospace quality experience, combined with motorsport and composite manufacturing exposure."
                             </p>
                         </div>
 
-                        <div class="card" style="margin-top: 15px;">
+                        <div class="card" style="margin-top: 10px;">
                             <h3>Languages</h3>
-                            <div style="margin-top: 10px;">
+                            <div style="margin-top: 5px;">
                                 <span class="lang-badge">Spanish: Native</span>
                                 <span class="lang-badge" style="background: var(--secondary);">English: C1</span>
                                 <span class="lang-badge" style="background: var(--accent); color: var(--primary); font-weight: bold;">French: Intermediate</span>
@@ -287,22 +346,23 @@
 
                     <div class="card">
                         <h3>Key Areas of Expertise</h3>
-                        <ul style="margin-top: 15px;">
-                            <li style="font-size: 12pt; margin-bottom: 15px;"><strong>Aerospace Manufacturing</strong><br><span style="font-size: 10pt; color: #666;">Standardized execution and strict regulatory environments.</span></li>
-                            <li style="font-size: 12pt; margin-bottom: 15px;"><strong>Quality Engineering</strong><br><span style="font-size: 10pt; color: #666;">Root cause analysis, auditing, and process control.</span></li>
-                            <li style="font-size: 12pt; margin-bottom: 15px;"><strong>Industrialisation & Production Support</strong><br><span style="font-size: 10pt; color: #666;">Bridging design blueprints and stable shopfloor output.</span></li>
-                            <li style="font-size: 12pt; margin-bottom: 15px;"><strong>Composites & Structures</strong><br><span style="font-size: 10pt; color: #666;">Familiarity with high-performance lightweight architectures.</span></li>
+                        <ul style="margin-top: 10px;">
+                            <li style="font-size: 11pt; margin-bottom: 12px;"><strong>Aerospace Manufacturing</strong><br><span style="font-size: 9.5pt; color: #666;">Standardized execution and strict regulatory environments.</span></li>
+                            <li style="font-size: 11pt; margin-bottom: 12px;"><strong>Quality Engineering</strong><br><span style="font-size: 9.5pt; color: #666;">Root cause analysis, auditing, and process control.</span></li>
+                            <li style="font-size: 11pt; margin-bottom: 12px;"><strong>Industrialisation & Production Support</strong><br><span style="font-size: 9.5pt; color: #666;">Bridging design blueprints and stable shopfloor output.</span></li>
+                            <li style="font-size: 11pt; margin-bottom: 12px;"><strong>Composites & Structures</strong><br><span style="font-size: 9.5pt; color: #666;">Familiarity with high-performance lightweight architectures.</span></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="slide-footer">
-                <span>David Garcia Lebrato &bull; Interview Presentation</span>
-                <span class="alten-tag">ALTEN Toulouse</span>
+                <span>David Garcia Lebrato &bull; Alten Toulouse Interview</span>
+                <span class="alten-tag">ALTEN</span>
             </div>
         </section>
 
 
+        <!-- SLIDE 2: PROFESSIONAL EXPERIENCE -->
         <section class="slide">
             <div class="slide-header">
                 <h2>Professional Experience</h2>
@@ -310,12 +370,11 @@
             </div>
             <div class="slide-content">
                 <div class="grid-2">
-                    <div class="card" style="display: flex; flex-direction: column;">
+                    <div class="card">
                         <div style="margin-bottom: 15px;">
                             <h3 style="border: none; margin-bottom: 0; padding-bottom: 0; color: var(--primary); font-size: 16pt;">Quality Engineer</h3>
                             <p style="color: var(--accent); font-weight: 600; font-size: 11pt;">Airgrup</p>
                         </div>
-                        
                         <ul>
                             <li>New product qualification and certification</li>
                             <li>Manufacturing process validation</li>
@@ -330,7 +389,7 @@
                     <div style="display: flex; flex-direction: column; justify-content: space-between;">
                         <div class="card">
                             <h3>Key Customers & Programmes</h3>
-                            <ul style="margin-top: 10px;" class="grid-2">
+                            <ul style="margin-top: 5px;" class="grid-2">
                                 <div>
                                     <li>Airbus</li>
                                     <li>Boeing</li>
@@ -351,12 +410,13 @@
                 </div>
             </div>
             <div class="slide-footer">
-                <span>David Garcia Lebrato &bull; Interview Presentation</span>
-                <span class="alten-tag">ALTEN Toulouse</span>
+                <span>David Garcia Lebrato &bull; Alten Toulouse Interview</span>
+                <span class="alten-tag">ALTEN</span>
             </div>
         </section>
 
 
+        <!-- SLIDE 3: MOTORSPORT EXPERIENCE -->
         <section class="slide">
             <div class="slide-header">
                 <h2>High-Performance Experience</h2>
@@ -364,7 +424,7 @@
             </div>
             <div class="slide-content">
                 <div class="grid-2">
-                    <div class="card" style="display: flex; flex-direction: column;">
+                    <div class="card">
                         <h3>Formula Student</h3>
                         <p style="color: #7f8c8d; font-size: 9.5pt; font-weight: 600; margin-bottom: 10px; text-transform: uppercase;">Chassis Department Lead</p>
                         <ul>
@@ -376,7 +436,7 @@
                         </ul>
                     </div>
 
-                    <div class="card" style="display: flex; flex-direction: column;">
+                    <div class="card">
                         <h3>Oxford Brookes Racing</h3>
                         <p style="color: #7f8c8d; font-size: 9.5pt; font-weight: 600; margin-bottom: 10px; text-transform: uppercase;">Structures & Composites Team</p>
                         <ul>
@@ -388,18 +448,19 @@
                     </div>
                 </div>
 
-                <div class="learning-box" style="margin-top: 25px;">
+                <div class="learning-box">
                     <h4>Key Learning</h4>
                     <p>Working in fast-paced, high-performance environments where product quality, manufacturing constraints, and raw performance metrics must be perfectly balanced simultaneously.</p>
                 </div>
             </div>
             <div class="slide-footer">
-                <span>David Garcia Lebrato &bull; Interview Presentation</span>
-                <span class="alten-tag">ALTEN Toulouse</span>
+                <span>David Garcia Lebrato &bull; Alten Toulouse Interview</span>
+                <span class="alten-tag">ALTEN</span>
             </div>
         </section>
 
 
+        <!-- SLIDE 4: TECHNICAL SKILLS -->
         <section class="slide">
             <div class="slide-header">
                 <h2>Technical Core Competencies</h2>
@@ -442,44 +503,45 @@
                         <ul>
                             <li>Composite Manufacturing</li>
                             <li>Welding Processes</li>
-                            <li>NDT (Non-Destructive Testing)</li>
+                            <li>NDT</li>
                             <li>Metallography</li>
-                            <li>Aerospace Grade Materials</li>
+                            <li>Aerospace Materials</li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="slide-footer">
-                <span>David Garcia Lebrato &bull; Interview Presentation</span>
-                <span class="alten-tag">ALTEN Toulouse</span>
+                <span>David Garcia Lebrato &bull; Alten Toulouse Interview</span>
+                <span class="alten-tag">ALTEN</span>
             </div>
         </section>
 
 
+        <!-- SLIDE 5: WHY FRANCE & WHY ALTEN -->
         <section class="slide">
             <div class="slide-header">
                 <h2>Motivation & Career Vision</h2>
                 <span class="slide-counter">Slide 5 / 5</span>
             </div>
             <div class="slide-content">
-                <div class="grid-2" style="margin-bottom: 25px;">
+                <div class="grid-2">
                     <div class="card">
                         <h3>Why France?</h3>
-                        <ul style="margin-top: 10px;">
-                            <li><strong>Strong interest</strong> in the European aerospace heartland.</li>
-                            <li>Opportunity to integrate into <strong>major international programmes</strong>.</li>
-                            <li>Proactive motivation to refine and master <strong>French language skills</strong>.</li>
-                            <li>Proven adaptability via previous <strong>international relocation</strong> for MSc studies.</li>
+                        <ul style="margin-top: 5px;">
+                            <li><strong>Strong interest</strong> in European aerospace heartland.</li>
+                            <li>Opportunity in <strong>major international programmes</strong>.</li>
+                            <li>Motivation to refine <strong>French language skills</strong>.</li>
+                            <li>Proven adaptability via <strong>international relocation</strong> for MSc.</li>
                         </ul>
                     </div>
 
                     <div class="card">
                         <h3>Why ALTEN?</h3>
-                        <ul style="margin-top: 10px;">
-                            <li>Direct <strong>exposure to multiple top-tier aerospace projects</strong>.</li>
-                            <li>An ideal, collaborative <strong>international engineering environment</strong>.</li>
-                            <li>Perfect scope to deploy skills across <strong>manufacturing, quality, and industrialisation</strong>.</li>
-                            <li>Clear pathway for structured, <strong>long-term professional growth</strong>.</li>
+                        <ul style="margin-top: 5px;">
+                            <li>Direct <strong>exposure to multiple top aerospace projects</strong>.</li>
+                            <li>Ideal <strong>international engineering environment</strong>.</li>
+                            <li>Scope to deploy skills in <strong>manufacturing and quality</strong>.</li>
+                            <li>Clear pathway for <strong>long-term professional growth</strong>.</li>
                         </ul>
                     </div>
                 </div>
@@ -490,12 +552,58 @@
                 </div>
             </div>
             <div class="slide-footer">
-                <span>David Garcia Lebrato &bull; Interview Presentation</span>
-                <span class="alten-tag">ALTEN Toulouse</span>
+                <span>David Garcia Lebrato &bull; Alten Toulouse Interview</span>
+                <span class="alten-tag">ALTEN</span>
             </div>
         </section>
-
     </div>
 
+    <!-- JavaScript Slide Engine -->
+    <script>
+        let currentSlideIdx = 0;
+        const slides = document.querySelectorAll('.slide');
+        const progressBar = document.getElementById('progress');
+
+        function updatePresentation() {
+            // Toggle active slide
+            slides.forEach((slide, idx) => {
+                if(idx === currentSlideIdx) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            // Update top progress bar percentage
+            const progressPercent = ((currentSlideIdx + 1) / slides.length) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+        }
+
+        function nextSlide() {
+            if (currentSlideIdx < slides.length - 1) {
+                currentSlideIdx++;
+                updatePresentation();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlideIdx > 0) {
+                currentSlideIdx--;
+                updatePresentation();
+            }
+        }
+
+        // Add keyboard arrow keys support
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight' || event.key === ' ') {
+                nextSlide();
+            } else if (event.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+
+        // Initialize presentation progress bar
+        updatePresentation();
+    </script>
 </body>
 </html>
