@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>David Garcia Lebrato - Presentation</title>
+    <title>David Garcia Lebrato - ALTEN Toulouse Presentation</title>
     <style>
         :root {
             --primary: #0f2537;      
@@ -34,23 +34,30 @@
             align-items: center;
         }
 
-        /* Fullscreen Slide Frame */
+        /* 16:9 Fullscreen Slide Framework */
         .presentation-wrapper {
             width: 100vw;
             height: 100vh;
-            max-width: 1366px; /* Standard 16:9 Presentation Width */
-            max-height: 768px; /* Standard 16:9 Presentation Height */
+            max-width: 100vw; 
+            max-height: calc(100vw * 9 / 16); 
             position: relative;
             background: var(--slide-bg);
             display: flex;
             flex-direction: column;
-            box-shadow: 0 25px 70px rgba(0,0,0,0.8);
+            overflow: hidden;
         }
 
-        /* Top Progress Indicator */
+        @media (min-aspect-ratio: 16/9) {
+            .presentation-wrapper {
+                width: calc(100vh * 16 / 9);
+                height: 100vh;
+            }
+        }
+
+        /* Top Progress Line */
         .progress-container {
             width: 100%;
-            height: 6px;
+            height: 5px;
             background: rgba(0,0,0,0.05);
             position: absolute;
             top: 0;
@@ -65,110 +72,151 @@
             transition: width 0.3s ease;
         }
 
-        /* Slide Engine */
+        /* Slide Control Engine */
         .slide {
             display: none; 
             width: 100%;
             height: 100%;
             flex-direction: column;
             justify-content: space-between;
-            padding: 50px 60px 40px 60px;
+            padding: 4vh 5vw 3vh 5vw;
         }
 
         .slide.active {
             display: flex; 
         }
 
-        /* Titles and Typography */
-        .slide-title {
-            font-size: 28pt;
-            color: var(--primary);
-            font-weight: 600;
-            border-bottom: 3px solid var(--accent);
-            padding-bottom: 12px;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        /* Standard Slide Header Layout */
+        .slide-header-block {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2.5vh;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 1vh;
         }
 
+        .alten-tag {
+            font-size: 14pt;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
+
+        .slide-main-title {
+            font-size: 22pt;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .slide-subtitle {
+            font-size: 11pt;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* Core Structure Elements */
         .slide-body {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
+            min-height: 0; /* Allows inner grids to scale nicely */
         }
 
-        h1 { font-size: 32pt; color: var(--primary); margin-bottom: 5px; }
-        h2 { font-size: 18pt; color: var(--secondary); font-weight: 500; margin-bottom: 20px; }
-        h3 { font-size: 14pt; color: var(--primary); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
-        p { font-size: 12pt; line-height: 1.6; color: var(--text-main); }
+        h1 { font-size: 28pt; color: var(--primary); font-weight: 700; margin-bottom: 2px; }
+        h2 { font-size: 14pt; color: var(--secondary); font-weight: 500; margin-bottom: 1.5vh; }
+        h3 { font-size: 11pt; color: var(--primary); margin-bottom: 1vh; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+        p { font-size: 11pt; line-height: 1.5; color: var(--text-main); }
         
-        .small-message {
+        .about-me-desc {
             font-style: italic;
             color: var(--text-muted);
             border-left: 4px solid var(--accent);
             padding-left: 15px;
-            margin-top: 25px;
-            font-size: 11.5pt;
+            font-size: 11pt;
+            margin-top: 2vh;
+            line-height: 1.5;
         }
 
-        /* Lists formatting */
+        /* Unordered Lists Reset & Style */
         ul { list-style: none; }
         ul li {
             position: relative;
-            padding-left: 22px;
-            margin-bottom: 8px;
-            font-size: 11.5pt;
+            padding-left: 18px;
+            margin-bottom: 0.8vh;
+            font-size: 10.5pt;
             color: var(--text-main);
             line-height: 1.4;
         }
         ul li::before {
-            content: "▪";
+            content: "✔";
             position: absolute;
-            left: 2px;
+            left: 0;
             color: var(--accent);
-            font-size: 12pt;
-            top: -1px;
+            font-size: 10pt;
+            top: 0px;
         }
 
-        /* Layout Frameworks */
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 25px; }
+        /* Grid Layouts */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4vw; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5vw; }
         
+        /* Containers & Boxes */
         .card {
             background: #fafbfc;
             border: 1px solid var(--border);
             border-radius: 6px;
-            padding: 20px;
+            padding: 2vh 1.5vw;
         }
 
-        .key-learning {
+        .img-placeholder {
+            background: #eef2f5;
+            border: 2px dashed #bdc3c7;
+            border-radius: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #7f8c8d;
+            font-size: 14pt;
+            font-weight: bold;
+            height: 100%;
+            min-height: 22vh;
+        }
+
+        .highlight-banner {
             background: #e6f7fa;
             border-left: 5px solid var(--accent);
-            padding: 15px 20px;
+            padding: 1.5vh 1.5vw;
             border-radius: 0 6px 6px 0;
             margin-top: auto;
         }
-        .key-learning strong { color: var(--primary); text-transform: uppercase; font-size: 10pt; letter-spacing: 0.5px; display: block; margin-bottom: 4px; }
+        .highlight-banner strong { color: var(--primary); text-transform: uppercase; font-size: 9pt; letter-spacing: 0.5px; display: block; margin-bottom: 2px; }
 
-        .career-objective {
+        .career-objective-box {
             background: var(--primary);
             color: white;
-            padding: 20px;
+            padding: 2vh 2vw;
             border-radius: 6px;
             margin-top: auto;
             border-left: 5px solid var(--accent);
         }
-        .career-objective strong { color: var(--accent); text-transform: uppercase; font-size: 10pt; display: block; margin-bottom: 5px; }
-        .career-objective p { color: white; font-style: italic; }
+        .career-objective-box strong { color: var(--accent); text-transform: uppercase; font-size: 9pt; display: block; margin-bottom: 4px; }
+        .career-objective-box p { color: white; font-style: italic; font-size: 11pt; }
 
-        /* Navigation Controls */
+        /* Embedded Language & Tech Badges */
+        .badge-row { display: flex; gap: 10px; margin-top: 0.5vh; }
+        .badge { background: var(--secondary); color: white; padding: 4px 10px; border-radius: 4px; font-size: 9.5pt; font-weight: 500; }
+        .badge.native { background: var(--primary); }
+        .badge.french { background: var(--accent); color: var(--primary); font-weight: bold; }
+
+        /* Interactive Controls Overlay */
         .navigation-overlay {
             position: absolute;
-            bottom: 30px;
-            right: 60px;
+            bottom: 2.5vh;
+            right: 5vw;
             display: flex;
-            gap: 12px;
+            gap: 10px;
             z-index: 100;
         }
 
@@ -176,39 +224,38 @@
             background: var(--primary);
             color: white;
             border: none;
-            padding: 10px 18px;
+            padding: 6px 14px;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 10pt;
+            font-size: 9.5pt;
             font-weight: 600;
             transition: background 0.2s ease;
             user-select: none;
         }
-
         .nav-btn:hover { background: var(--accent); color: var(--primary); }
 
-        /* Slide Footer text */
+        /* Standardized Slide Footer */
         .slide-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 9.5pt;
+            font-size: 9pt;
             color: #95a5a6;
             border-top: 1px solid #eef2f5;
-            padding-top: 15px;
-            margin-top: 20px;
+            padding-top: 1vh;
+            margin-top: auto;
         }
     </style>
 </head>
 <body>
 
     <div class="presentation-wrapper">
-        <!-- Progress Bar -->
+        <!-- Horizontal Progress Topbar -->
         <div class="progress-container">
             <div class="progress-bar" id="progress"></div>
         </div>
 
-        <!-- Navigation Buttons -->
+        <!-- Navigation System Overlay -->
         <div class="navigation-overlay">
             <button class="nav-btn" onclick="prevSlide()">◀ Previous</button>
             <button class="nav-btn" onclick="nextSlide()">Next ▶</button>
@@ -216,225 +263,272 @@
 
         <!-- SLIDE 1 – ABOUT ME -->
         <section class="slide active">
+            <div class="slide-header-block">
+                <div>
+                    <div class="slide-main-title">About Me</div>
+                    <div class="slide-subtitle">Candidate Presentation for Aerospace Quality & Manufacturing Engineering</div>
+                </div>
+                <div class="alten-tag">ALTEN TOULOUSE</div>
+            </div>
+            
             <div class="slide-body">
                 <h1>David Garcia Lebrato</h1>
-                <h2>MSc Motorsport Engineering &bull; Oxford Brookes University</h2>
-                <p style="font-size: 14pt; color: var(--accent); margin-bottom: 25px; font-weight: 500;">Industrial Design & Product Development Engineer</p>
+                <h2>Mechanical & Manufacturing-Oriented Engineer</h2>
                 
-                <div class="grid-2">
+                <div class="grid-2" style="margin-top: 1vh;">
                     <div>
-                        <h3>Key Areas</h3>
-                        <ul style="margin-bottom: 25px;">
-                            <li>Aerospace Manufacturing</li>
-                            <li>Quality Engineering</li>
-                            <li>Industrialisation</li>
-                            <li>Production Support</li>
-                            <li>Composites & Structures</li>
+                        <h3 style="margin-top: 0;">Education Background</h3>
+                        <ul style="margin-bottom: 2.5vh;">
+                            <li>MSc Motorsport Engineering Oxford Brookes University</li>
+                            <li>Industrial Design & Product Development Engineering</li>
                         </ul>
 
-                        <h3>Languages</h3>
-                        <ul>
-                            <li>Spanish (Native)</li>
-                            <li>English (C1)</li>
-                            <li>French (Intermediate)</li>
-                        </ul>
-                    </div>
-
-                    <div style="display: flex; flex-direction: column; justify-content: center;">
-                        <div class="small-message">
-                            Mechanical and manufacturing-oriented engineer with over three years of aerospace quality experience, combined with motorsport and composite manufacturing exposure.
+                        <h3>Language Proficiency</h3>
+                        <div class="badge-row" style="margin-bottom: 2.5vh;">
+                            <span class="badge native">Spanish: Native</span>
+                            <span class="badge">English: C1</span>
+                            <span class="badge french">French: B1/B2</span>
                         </div>
                     </div>
+
+                    <div>
+                        <h3>Key Target Areas</h3>
+                        <ul style="margin-bottom: 0;">
+                            <li style="margin-bottom: 1.5vh;"><strong>Aerospace Manufacturing & Quality</strong><br><span style="font-size: 9.5pt; color: var(--text-muted);">Process qualification, FMEA, root-cause analysis.</span></li>
+                            <li style="margin-bottom: 1.5vh;"><strong>Industrialisation & Production Support</strong><br><span style="font-size: 9.5pt; color: var(--text-muted);">Shopfloor validation, readiness, technical documentation.</span></li>
+                            <li><strong>Composites & Structures</strong><br><span style="font-size: 9.5pt; color: var(--text-muted);">Advanced composite manufacturing, tooling & NDT.</span></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="about-me-desc">
+                    Over three years of aerospace quality engineering experience, uniquely combined with high-performance motorsport exposure and advanced composite manufacturing validation.
                 </div>
             </div>
+
             <div class="slide-footer">
-                <span>David Garcia Lebrato</span>
-                <span>Slide 1 / 5</span>
+                <span>David Garcia Lebrato Presentation for ALTEN Toulouse</span>
+                <span>Slide 1 of 5</span>
             </div>
         </section>
 
 
-        <!-- SLIDE 2 – PROFESSIONAL EXPERIENCE (AIRGRUP) -->
+        <!-- SLIDE 2 – PROFESSIONAL EXPERIENCE -->
         <section class="slide">
-            <div class="slide-title">Professional Experience (Airgrup)</div>
+            <div class="slide-header-block">
+                <div>
+                    <div class="slide-main-title">Professional Experience</div>
+                    <div class="slide-subtitle">Driving process safety and quality system compliance in the aerospace sector</div>
+                </div>
+                <div class="alten-tag">ALTEN TOULOUSE</div>
+            </div>
+            
             <div class="slide-body">
-                <p style="font-size: 16pt; font-weight: 600; color: var(--primary); margin-bottom: 2px;">Quality Engineer – Airgrup</p>
-                <p style="color: var(--accent); font-weight: 500; margin-bottom: 20px;">Main Responsibilities</p>
+                <div style="margin-bottom: 2vh;">
+                    <span style="background: var(--primary); color: white; padding: 3px 8px; border-radius: 3px; font-size: 9pt; font-weight: bold; vertical-align: middle; margin-right: 8px;">3+ YEARS EXPERIENCE</span>
+                    <span style="font-size: 15pt; font-weight: 700; color: var(--primary); vertical-align: middle;">Quality Engineer – Airgrup (Aerospace Supplier)</span>
+                </div>
                 
-                <div class="grid-2">
-                    <div>
-                        <ul>
-                            <li>New product qualification and certification</li>
-                            <li>Manufacturing process validation</li>
-                            <li>Non-conformance management</li>
-                            <li>Root cause analysis and corrective actions</li>
-                            <li>NADCAP and customer audits</li>
-                            <li>Technical documentation and traceability</li>
-                            <li>Production support and shopfloor collaboration</li>
-                        </ul>
-                    </div>
-
-                    <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
-                        <div class="card">
-                            <h3>Customers</h3>
-                            <ul class="grid-2">
-                                <div>
-                                    <li>Airbus</li>
-                                    <li>Boeing</li>
-                                    <li>Dassault</li>
-                                </div>
-                                <div>
-                                    <li>Embraer</li>
-                                    <li>Defence programmes</li>
-                                </div>
+                <div class="grid-2" style="flex: 1; min-height: 0;">
+                    <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <h3>Key Responsibilities & Activities</h3>
+                            <ul>
+                                <li><strong>Qualification & Process Validation:</strong> Managing validation activities (FMEA, control plans, PPAP).</li>
+                                <li><strong>System Audit & Compliance:</strong> Preparing the manufacturing plant for strict customer and NADCAP audits.</li>
+                                <li><strong>Non-Conformance Resolution:</strong> Led 8D problem-solving methodologies and root-cause analysis (Ishikawa, 5 Whys).</li>
+                                <li><strong>Documentation & Traceability:</strong> Creating clear, audit-proof technical and traceability frameworks.</li>
+                                <li><strong>Shopfloor Support:</strong> Immediate troubleshooting and technical assistance directly to the manufacturing lines.</li>
                             </ul>
                         </div>
+                        
+                        <div class="highlight-banner">
+                            <strong>Core Competence Acquired</strong>
+                            <p>Deep understanding of how high-level engineering requirements are translated directly into repeatable and controlled manufacturing processes.</p>
+                        </div>
+                    </div>
 
-                        <div class="key-learning">
-                            <strong>Key Learning</strong>
-                            <p>Understanding how engineering requirements are translated into controlled and repeatable manufacturing processes.</p>
+                    <div style="display: flex; flex-direction: column; gap: 2vh;">
+                        <div class="img-placeholder">600 × 400</div>
+                        <div class="card">
+                            <h3>Key Customer Interface Exposure</h3>
+                            <ul class="grid-2" style="margin-top: 5px;">
+                                <div>
+                                    <li>AIRBUS</li>
+                                    <li>BOEING</li>
+                                    <li>DASSAULT AVIATION</li>
+                                </div>
+                                <div>
+                                    <li>EMBRAER</li>
+                                    <li>DEFENCE PROGRAMMES</li>
+                                </div>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="slide-footer">
-                <span>David Garcia Lebrato</span>
-                <span>Slide 2 / 5</span>
+                <span>David Garcia Lebrato Presentation for ALTEN Toulouse</span>
+                <span>Slide 2 of 5</span>
             </div>
         </section>
 
 
         <!-- SLIDE 3 – MOTORSPORT EXPERIENCE -->
         <section class="slide">
-            <div class="slide-title">Motorsport Experience</div>
-            <div class="slide-body">
-                <div class="grid-2" style="margin-bottom: 25px;">
-                    <div class="card">
-                        <h3>Formula Student</h3>
-                        <p style="font-size: 10.5pt; color: var(--accent); font-weight: bold; text-transform: uppercase; margin-bottom: 10px;">Chassis Department Lead</p>
-                        <ul>
-                            <li>Team coordination</li>
-                            <li>Design and manufacturing planning</li>
-                            <li>Composite and metallic structures</li>
-                            <li>Validation activities</li>
-                            <li>Project management under tight deadlines</li>
-                        </ul>
-                    </div>
-
-                    <div class="card">
-                        <h3>Oxford Brookes Racing</h3>
-                        <p style="font-size: 10.5pt; color: var(--accent); font-weight: bold; text-transform: uppercase; margin-bottom: 10px;">Structures & Composites Team</p>
-                        <ul>
-                            <li>Carbon fibre manufacturing</li>
-                            <li>Tooling</li>
-                            <li>Composite inspection</li>
-                            <li>Structural assemblies</li>
-                        </ul>
-                    </div>
+            <div class="slide-header-block">
+                <div>
+                    <div class="slide-main-title">Motorsport & High-Performance Experience</div>
+                    <div class="slide-subtitle">Leveraging agile, highly demanding development cycles to optimize structural systems</div>
                 </div>
+                <div class="alten-tag">ALTEN TOULOUSE</div>
+            </div>
+            
+            <div class="slide-body">
+                <div class="grid-2" style="flex: 1; min-height: 0;">
+                    <div style="display: flex; flex-direction: column; gap: 2vh; justify-content: space-between;">
+                        <div class="card">
+                            <h3>Formula Student - Chassis Department Lead</h3>
+                            <ul>
+                                <li><strong>Team Coordination:</strong> Managed timeline, tasks and planning for structured groups.</li>
+                                <li><strong>Structural Manufacturing:</strong> Designed and validated metallic/composite chassis frames.</li>
+                                <li><strong>Tight Timelines:</strong> Executed hardware deliverables under absolute deadline pressure.</li>
+                            </ul>
+                        </div>
 
-                <div class="key-learning">
-                    <strong>Key Learning</strong>
-                    <p>Working in high-performance environments where quality, manufacturing and performance must be balanced simultaneously.</p>
+                        <div class="card">
+                            <h3>Oxford Brookes Racing - Structures & Composites</h3>
+                            <ul>
+                                <li><strong>Carbon Fibre Processing:</strong> Practical work in composite lamination, vacuum bagging.</li>
+                                <li><strong>Composite Inspection & NDT:</strong> Implemented structures quality verification checks.</li>
+                                <li><strong>Tooling Design:</strong> Engineered moulds for high-precision structural assemblies.</li>
+                            </ul>
+                        </div>
+
+                        <div class="highlight-banner" style="margin-top: 0;">
+                            <strong>High Performance Mindset</strong>
+                            <p>Demonstrated capacity to deliver optimal engineering outcomes where product safety, precision manufacturing speed, and structural performance are balanced simultaneously.</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column;">
+                        <div class="img-placeholder" style="height: 100%;">600 × 400</div>
+                    </div>
                 </div>
             </div>
+
             <div class="slide-footer">
-                <span>David Garcia Lebrato</span>
-                <span>Slide 3 / 5</span>
+                <span>David Garcia Lebrato Presentation for ALTEN Toulouse</span>
+                <span>Slide 3 of 5</span>
             </div>
         </section>
 
 
         <!-- SLIDE 4 – TECHNICAL SKILLS -->
         <section class="slide">
-            <div class="slide-title">Technical Skills</div>
-            <div class="slide-body">
+            <div class="slide-header-block">
+                <div>
+                    <div class="slide-main-title">Technical & Engineering Skills</div>
+                    <div class="slide-subtitle">A balanced skillset bridging advanced production methods and quality assurance tools</div>
+                </div>
+                <div class="alten-tag">ALTEN TOULOUSE</div>
+            </div>
+            
+            <div class="slide-body" style="justify-content: center;">
                 <div class="grid-3">
                     <!-- Column 1 -->
                     <div class="card">
-                        <h3>Manufacturing</h3>
+                        <h3 style="background: var(--primary); color: white; padding: 6px 12px; margin: -2vh -1.5vw 1.5vh -1.5vw; border-radius: 6px 6px 0 0;">Manufacturing</h3>
                         <ul>
-                            <li>Industrialisation</li>
-                            <li>Process Validation</li>
-                            <li>Manufacturing Support</li>
-                            <li>Production Readiness</li>
-                            <li>Continuous Improvement</li>
+                            <li><strong>Industrialisation:</strong> Seamless integration from drawing to physical system execution.</li>
+                            <li><strong>Process Validation:</strong> Verification of machine inputs, setup, and stability metrics.</li>
+                            <li><strong>Production Support:</strong> Resolving assembly conflicts on active lines.</li>
+                            <li><strong>Production Readiness:</strong> Executing gate reviews and capacity checks.</li>
+                            <li><strong>Continuous Improvement:</strong> Lean methodologies, scrap rate optimization.</li>
                         </ul>
                     </div>
 
                     <!-- Column 2 -->
                     <div class="card">
-                        <h3>Quality</h3>
+                        <h3 style="background: var(--secondary); color: white; padding: 6px 12px; margin: -2vh -1.5vw 1.5vh -1.5vw; border-radius: 6px 6px 0 0;">Quality Assurance</h3>
                         <ul>
-                            <li>Root Cause Analysis</li>
-                            <li>8D</li>
-                            <li>FMEA</li>
-                            <li>Audits</li>
-                            <li>Corrective Actions</li>
-                            <li>NADCAP</li>
-                            <li>ISO 9001</li>
+                            <li><strong>Root Cause Analysis:</strong> Proficient with Ishikawa diagrams, 5-Whys, 8D.</li>
+                            <li><strong>FMEA Methodologies:</strong> Designing out process failure risks preemptively.</li>
+                            <li><strong>Corrective Actions:</strong> Formulating sustainable, long-term containment fixes.</li>
+                            <li><strong>Industrial Auditing:</strong> Experienced in ISO 9001 and NADCAP compliance prep.</li>
+                            <li><strong>Documentation:</strong> Rigorous attention to safety-critical traceability files.</li>
                         </ul>
                     </div>
 
                     <!-- Column 3 -->
                     <div class="card">
-                        <h3>Structures & Materials</h3>
+                        <h3 style="background: var(--accent); color: var(--primary); padding: 6px 12px; margin: -2vh -1.5vw 1.5vh -1.5vw; border-radius: 6px 6px 0 0;">Materials & Structures</h3>
                         <ul>
-                            <li>Composite Manufacturing</li>
-                            <li>Welding Processes</li>
-                            <li>NDT</li>
-                            <li>Metallography</li>
-                            <li>Aerospace Materials</li>
+                            <li><strong>Composite Fabrication:</strong> In-depth knowledge of carbon/epoxy layups and cures.</li>
+                            <li><strong>Aerospace Metallurgy:</strong> Structural checks, welding parameters, and finishes.</li>
+                            <li><strong>NDT Methodologies:</strong> Working familiarity with non-destructive inspections.</li>
+                            <li><strong>Metallographic Tests:</strong> Mechanical component validation workflows.</li>
+                            <li><strong>Materials Selection:</strong> Design considerations for weight and stresses.</li>
                         </ul>
                     </div>
                 </div>
             </div>
+
             <div class="slide-footer">
-                <span>David Garcia Lebrato</span>
-                <span>Slide 4 / 5</span>
+                <span>David Garcia Lebrato Presentation for ALTEN Toulouse</span>
+                <span>Slide 4 of 5</span>
             </div>
         </section>
 
 
         <!-- SLIDE 5 – WHY FRANCE & WHY ALTEN -->
         <section class="slide">
-            <div class="slide-title">Why France & Why ALTEN</div>
+            <div class="slide-header-block">
+                <div>
+                    <div class="slide-main-title">Why France & ALTEN?</div>
+                    <div class="slide-subtitle">Establishing professional and geographic alignment for long-term career growth</div>
+                </div>
+                <div class="alten-tag">ALTEN TOULOUSE</div>
+            </div>
+            
             <div class="slide-body">
-                <div class="grid-2" style="margin-bottom: 25px;">
+                <div class="grid-2" style="margin-bottom: 2vh;">
                     <div class="card">
-                        <h3>Why France</h3>
+                        <h3>Why France (Toulouse)?</h3>
                         <ul>
-                            <li>Strong interest in aerospace industry</li>
-                            <li>Opportunity to work in international programmes</li>
-                            <li>Motivation to continue improving French language skills</li>
-                            <li>Previous experience relocating abroad for studies</li>
+                            <li><strong>Global Aerospace Capital:</strong> Strong interest in building a long-term engineering career within France's world-leading aerospace cluster.</li>
+                            <li><strong>International Programmes:</strong> Eager to coordinate with multi-national aircraft manufacturing platforms.</li>
+                            <li><strong>Language Progression:</strong> Deep motivation to immerse, collaborate, and reach total fluency in business French.</li>
+                            <li><strong>Relocation Experience:</strong> Proven adaptability, having successfully relocated abroad for demanding academic/industrial programs.</li>
                         </ul>
                     </div>
 
                     <div class="card">
-                        <h3>Why ALTEN</h3>
+                        <h3>Why ALTEN?</h3>
                         <ul>
-                            <li>Exposure to multiple aerospace projects</li>
-                            <li>International engineering environment</li>
-                            <li>Opportunity to develop in manufacturing, quality and industrialisation roles</li>
-                            <li>Long-term professional growth</li>
+                            <li><strong>Project Diversity:</strong> Direct exposure to world-class OEMs and top-tier aerospace suppliers across multi-year contracts.</li>
+                            <li><strong>Global Engineering Hub:</strong> Integrating into a highly technical, international team sharing top engineering standards.</li>
+                            <li><strong>Growth Environment:</strong> Perfect alignment with ALTEN's focus on manufacturing, quality, and structural processes.</li>
+                            <li><strong>Career Pathway:</strong> Progression within ALTEN's structured framework into technical lead or project management roles.</li>
                         </ul>
                     </div>
                 </div>
 
-                <div class="career-objective">
-                    <strong>Career Objective</strong>
-                    <p>To contribute to major aerospace programmes while continuing to develop as a manufacturing and quality engineer within an international environment.</p>
+                <div class="career-objective-box">
+                    <strong>My Career Objective</strong>
+                    <p>"To actively contribute to major aerospace programmes while continuing to develop as a manufacturing and quality engineer within an international environment."</p>
                 </div>
             </div>
+
             <div class="slide-footer">
-                <span>David Garcia Lebrato</span>
-                <span>Slide 5 / 5</span>
+                <span>David Garcia Lebrato Presentation for ALTEN Toulouse</span>
+                <span>Slide 5 of 5</span>
             </div>
         </section>
     </div>
 
-    <!-- JavaScript Slide Control Engine -->
+    <!-- JavaScript Presentation Engine -->
     <script>
         let currentSlideIdx = 0;
         const slides = document.querySelectorAll('.slide');
