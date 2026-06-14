@@ -13,6 +13,7 @@
             --text-main: #2c3e50;    
             --text-muted: #7f8c8d;
             --border-light: #eaeded;
+            --card-bg: #f8fafc;
         }
 
         * {
@@ -56,7 +57,7 @@
         /* Top Bar Indicator */
         .progress-container {
             width: 100%;
-            height: 4px;
+            height: 5px;
             background: rgba(0,0,0,0.05);
             position: absolute;
             top: 0;
@@ -77,8 +78,8 @@
             width: 100%;
             height: 100%;
             flex-direction: column;
-            justify-content: space-between;
-            padding: 5vh 5vw 3vh 5vw;
+            justify-content: flex-start; /* Cambio clave para evitar el vacío abajo */
+            padding: 6vh 5vw 4vh 5vw;
         }
 
         .slide.active {
@@ -90,135 +91,128 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 2vh;
+            margin-bottom: 1vh;
         }
 
         .alten-brand {
             font-size: 13pt;
             font-weight: 800;
             color: var(--primary);
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 2px;
         }
 
-        /* Typography & Layout elements from PDF */
+        /* Typography & Layout elements */
         .main-title {
-            font-size: 24pt;
+            font-size: 26pt;
             color: var(--primary);
             font-weight: 700;
             margin-bottom: 2px;
         }
 
         .sub-title-desc {
-            font-size: 11pt;
+            font-size: 12pt;
             color: var(--text-muted);
-            margin-bottom: 2vh;
+            margin-bottom: 4vh; /* Más espacio bajo el subtítulo */
         }
 
-        h1 { font-size: 26pt; color: var(--primary); font-weight: 700; }
-        h2 { font-size: 14pt; color: var(--text-muted); font-weight: 400; margin-bottom: 3vh; }
-        h3 { font-size: 11pt; color: var(--primary); margin-bottom: 1.2vh; text-transform: uppercase; letter-spacing: 0.5px; }
+        .slide-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 3vh; /* Separación consistente entre bloques internos */
+        }
+
+        h1 { font-size: 28pt; color: var(--primary); font-weight: 700; margin-bottom: 0.5vh; }
+        h2 { font-size: 15pt; color: var(--text-muted); font-weight: 400; margin-bottom: 2vh; }
+        h3 { font-size: 12pt; color: var(--primary); margin-bottom: 1.5vh; text-transform: uppercase; letter-spacing: 0.5px; }
         
-        /* Lists exact format matching the source checks */
+        /* Lists design */
         ul { list-style: none; }
         ul li {
             position: relative;
-            padding-left: 22px;
-            margin-bottom: 1vh;
-            font-size: 10.5pt;
+            padding-left: 26px;
+            margin-bottom: 1.8vh; /* Más separación entre ítems de listas */
+            font-size: 11pt;
             color: var(--text-main);
-            line-height: 1.4;
+            line-height: 1.5;
         }
         ul li::before {
             content: "✔";
             position: absolute;
             left: 0;
             color: var(--accent);
-            font-size: 11pt;
+            font-size: 12pt;
             font-weight: bold;
             top: -1px;
         }
 
         /* Layout Frameworks */
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4vw; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3vw; }
         .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2vw; }
         
-        /* Clean content containers */
+        /* Cards para estructurar mejor visualmente */
+        .card {
+            background: var(--card-bg);
+            padding: 2.5vh 2vw;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            height: 100%;
+        }
+
         .content-box {
             display: flex;
             flex-direction: column;
         }
 
-        .img-box {
-            background: #f2f4f4;
-            border: 1px solid #d5dbdb;
+        /* Highlight banners */
+        .bottom-highlight, .objective-banner {
+            background: rgba(0, 168, 204, 0.06);
+            border: 1px dashed var(--accent);
+            border-left: 5px solid var(--accent);
+            padding: 2vh 2vw;
             border-radius: 4px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #7f8c8d;
-            font-size: 13pt;
-            font-weight: bold;
-            height: 100%;
-            min-height: 25vh;
+            margin-top: 2vh;
         }
-
-        /* Bottom highlight section styles matching verbatim */
-        .bottom-highlight {
-            border-top: 2px solid var(--accent);
-            padding-top: 1.5vh;
-            margin-top: auto;
-        }
-        .bottom-highlight span {
-            font-size: 9pt;
-            font-weight: 700;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: block;
-            margin-bottom: 2px;
-        }
-        .bottom-highlight p {
-            font-size: 11pt;
-            line-height: 1.4;
-            color: var(--text-main);
-        }
-
-        .objective-banner {
-            border-top: 2px solid var(--accent);
-            padding-top: 1.5vh;
-            margin-top: auto;
-        }
-        .objective-banner span {
-            font-size: 9pt;
+        .bottom-highlight span, .objective-banner span {
+            font-size: 9.5pt;
             font-weight: 700;
             color: var(--primary);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             display: block;
-            margin-bottom: 2px;
+            margin-bottom: 6px;
         }
-        .objective-banner p {
-            font-size: 11pt;
-            font-style: italic;
+        .bottom-highlight p, .objective-banner p {
+            font-size: 11.5pt;
+            line-height: 1.5;
             color: var(--text-main);
         }
+        .objective-banner p { font-style: italic; }
 
-        /* Languages layout section */
+        /* Languages layout */
         .lang-container {
             display: flex;
-            gap: 25px;
-            margin-top: 1vh;
+            gap: 30px;
+            margin-top: 1.5vh;
         }
         .lang-item {
-            font-size: 10.5pt;
+            font-size: 11pt;
+            background: #fff;
+            padding: 8px 15px;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            border: 1px solid var(--border-light);
         }
         .lang-item strong {
             display: block;
-            font-size: 12pt;
-            color: var(--primary);
+            font-size: 13pt;
+            color: var(--accent);
         }
 
-        /* Keyboard / UI Navigation Controls Overlay */
+        /* UI Navigation Controls */
         .nav-controls {
             position: absolute;
             bottom: 2.5vh;
@@ -232,26 +226,26 @@
             background: var(--primary);
             color: white;
             border: none;
-            padding: 6px 14px;
+            padding: 8px 16px;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 9.5pt;
+            font-size: 10pt;
             font-weight: 600;
-            transition: background 0.2s ease;
+            transition: all 0.2s ease;
             user-select: none;
         }
         .nav-btn:hover { background: var(--accent); color: var(--primary); }
 
-        /* Document Footer Layout matching PDF */
+        /* Document Footer */
         .slide-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 9pt;
+            font-size: 9.5pt;
             color: var(--text-muted);
             border-top: 1px solid var(--border-light);
-            padding-top: 1vh;
-            margin-top: auto;
+            padding-top: 1.5vh;
+            margin-top: auto; /* Se mantiene abajo de forma fija */
         }
     </style>
 </head>
@@ -279,18 +273,19 @@
             <div class="sub-title-desc">Candidate Presentation for Aerospace Quality & Manufacturing Engineering</div>
             
             <div class="slide-body">
-                <h1>David Garcia Lebrato</h1>
-                <h2>Mechanical & Manufacturing-Oriented Engineer</h2>
-                
-                <p style="font-size: 11pt; color: var(--text-main); line-height: 1.5; margin-bottom: 4vh; max-width: 90%;">
-                    Over three years of aerospace quality engineering experience, uniquely combined with high-performance motorsport exposure and advanced composite manufacturing validation.
-                </p>
+                <div>
+                    <h1>David Garcia Lebrato</h1>
+                    <h2>Mechanical & Manufacturing-Oriented Engineer</h2>
+                    <p style="font-size: 12pt; color: var(--text-main); line-height: 1.6; max-width: 95%; margin-bottom: 1vh;">
+                        Over three years of aerospace quality engineering experience, uniquely combined with high-performance motorsport exposure and advanced composite manufacturing validation.
+                    </p>
+                </div>
                 
                 <div class="grid-2">
-                    <div class="content-box">
+                    <div class="card content-box">
                         <h3>Education Background</h3>
                         <ul style="margin-bottom: 3vh;">
-                            <li>MSc Motorsport Engineering Oxford Brookes University</li>
+                            <li>MSc Motorsport Engineering &ndash; Oxford Brookes University</li>
                             <li>Industrial Design & Product Development Engineering</li>
                         </ul>
 
@@ -302,11 +297,11 @@
                         </div>
                     </div>
 
-                    <div class="content-box">
+                    <div class="card content-box" style="border-left-color: var(--accent);">
                         <h3>Key Target Areas</h3>
                         <ul>
-                            <li style="margin-bottom: 1.5vh;"><strong>Aerospace Manufacturing & Quality</strong><br><span style="color: var(--text-muted); font-size: 10pt;">Process qualification, FMEA, root-cause analysis.</span></li>
-                            <li style="margin-bottom: 1.5vh;"><strong>Industrialisation & Production Support</strong><br><span style="color: var(--text-muted); font-size: 10pt;">Shopfloor validation, readiness, technical documentation.</span></li>
+                            <li><strong>Aerospace Manufacturing & Quality</strong><br><span style="color: var(--text-muted); font-size: 10pt;">Process qualification, FMEA, root-cause analysis.</span></li>
+                            <li><strong>Industrialisation & Production Support</strong><br><span style="color: var(--text-muted); font-size: 10pt;">Shopfloor validation, readiness, technical documentation.</span></li>
                             <li><strong>Composites & Structures</strong><br><span style="color: var(--text-muted); font-size: 10pt;">Advanced composite manufacturing, tooling & NDT.</span></li>
                         </ul>
                     </div>
@@ -330,46 +325,43 @@
             <div class="sub-title-desc">Driving process safety and quality system compliance in the aerospace sector</div>
             
             <div class="slide-body">
-                <div style="margin-bottom: 3vh;">
-                    <h1 style="font-size: 20pt; color: var(--primary);">Quality Engineer</h1>
-                    <h2 style="font-size: 13pt; color: var(--text-muted); margin-bottom: 0;">Airgrup (Aerospace Supplier) <span style="font-size: 10pt; color: var(--accent); font-weight: bold; margin-left: 10px;">3+ YEARS EXPERIENCE</span></h2>
+                <div style="border-left: 4px solid var(--accent); padding-left: 15px;">
+                    <h1 style="font-size: 22pt; color: var(--primary);">Quality Engineer</h1>
+                    <h2 style="font-size: 14pt; color: var(--text-muted); margin-bottom: 0;">Airgrup (Aerospace Supplier) <span style="font-size: 10.5pt; background: var(--primary); color: white; padding: 3px 8px; border-radius: 3px; margin-left: 15px; letter-spacing: 0.5px;">3+ YEARS EXPERIENCE</span></h2>
                 </div>
                 
-                <div class="grid-2" style="flex: 1; min-height: 0;">
-                    <div style="display: flex; flex-direction: column; justify-content: space-between;">
-                        <div>
-                            <h3>Key Responsibilities & Activities</h3>
-                            <ul>
-                                <li><strong>Qualification & Process Validation:</strong> Managing validation activities (FMEA, control plans, PPAP).</li>
-                                <li><strong>System Audit & Compliance:</strong> Preparing the manufacturing plant for strict customer and NADCAP audits.</li>
-                                <li><strong>Non-Conformance Resolution:</strong> Led 8D problem-solving methodologies and root-cause analysis (Ishikawa, 5 Whys).</li>
-                                <li><strong>Documentation & Traceability:</strong> Creating clear, audit-proof technical and traceability frameworks.</li>
-                                <li><strong>Shopfloor Support:</strong> Immediate troubleshooting and technical assistance directly to the manufacturing lines.</li>
+                <!-- Reajustado a 2 columnas completas al quitar la imagen -->
+                <div class="grid-2">
+                    <div class="content-box">
+                        <h3>Key Responsibilities & Activities</h3>
+                        <ul>
+                            <li><strong>Qualification & Process Validation:</strong> Managing validation activities (FMEA, control plans, PPAP).</li>
+                            <li><strong>System Audit & Compliance:</strong> Preparing the manufacturing plant for strict customer and NADCAP audits.</li>
+                            <li><strong>Non-Conformance Resolution:</strong> Led 8D problem-solving methodologies and root-cause analysis (Ishikawa, 5 Whys).</li>
+                            <li><strong>Documentation & Traceability:</strong> Creating clear, audit-proof technical and traceability frameworks.</li>
+                            <li><strong>Shopfloor Support:</strong> Immediate troubleshooting and technical assistance directly to the manufacturing lines.</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-box" style="justify-content:间; gap: 2vh;">
+                        <div class="card">
+                            <h3>Key Customer Interface Exposure</h3>
+                            <ul class="grid-2" style="gap: 15px 20px;">
+                                <div>
+                                    <li style="margin-bottom:1vh;">AIRBUS</li>
+                                    <li style="margin-bottom:1vh;">BOEING</li>
+                                    <li style="margin-bottom:1vh;">DASSAULT AVIATION</li>
+                                </div>
+                                <div>
+                                    <li style="margin-bottom:1vh;">EMBRAER</li>
+                                    <li style="margin-bottom:1vh;">DEFENCE PROGRAMMES</li>
+                                </div>
                             </ul>
                         </div>
                         
                         <div class="bottom-highlight">
                             <span>Core Competence Acquired</span>
                             <p>Deep understanding of how high-level engineering requirements are translated directly into repeatable and controlled manufacturing processes.</p>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; flex-direction: column; gap: 2.5vh;">
-                        <div class="img-box">600 × 400</div>
-                        
-                        <div class="content-box">
-                            <h3>Key Customer Interface Exposure</h3>
-                            <ul class="grid-2" style="gap: 10px 20px;">
-                                <div>
-                                    <li>AIRBUS</li>
-                                    <li>BOEING</li>
-                                    <li>DASSAULT AVIATION</li>
-                                </div>
-                                <div>
-                                    <li>EMBRAER</li>
-                                    <li>DEFENCE PROGRAMMES</li>
-                                </div>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -392,35 +384,30 @@
             <div class="sub-title-desc">Leveraging agile, highly demanding development cycles to optimize structural systems</div>
             
             <div class="slide-body">
-                <div class="grid-2" style="flex: 1; min-height: 0;">
-                    <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
-                        <div style="margin-bottom: 2vh;">
-                            <h3 style="font-size: 12pt; color: var(--primary); margin-bottom: 1vh;">Formula Student - Chassis Department Lead</h3>
-                            <ul>
-                                <li><strong>Team Coordination:</strong> Managed timeline, tasks and planning for structured groups.</li>
-                                <li><strong>Structural Manufacturing:</strong> Designed and validated metallic/composite chassis frames.</li>
-                                <li><strong>Tight Timelines:</strong> Executed hardware deliverables under absolute deadline pressure.</li>
-                            </ul>
-                        </div>
-
-                        <div style="margin-bottom: 2vh;">
-                            <h3 style="font-size: 12pt; color: var(--primary); margin-bottom: 1vh;">Oxford Brookes Racing - Structures & Composites</h3>
-                            <ul>
-                                <li><strong>Carbon Fibre Processing:</strong> Practical work in composite lamination, vacuum bagging.</li>
-                                <li><strong>Composite Inspection & NDT:</strong> Implemented structures quality verification checks.</li>
-                                <li><strong>Tooling Design:</strong> Engineered moulds for high-precision structural assemblies.</li>
-                            </ul>
-                        </div>
-
-                        <div class="bottom-highlight">
-                            <span>High Performance Mindset</span>
-                            <p>Demonstrated capacity to deliver optimal engineering outcomes where product safety, precision manufacturing speed, and structural performance are balanced simultaneously.</p>
-                        </div>
+                <!-- Distribuido en dos columnas limpias sin la caja de imagen -->
+                <div class="grid-2">
+                    <div class="card content-box">
+                        <h3 style="font-size: 12.5pt; color: var(--accent); border-bottom: 1px solid var(--border-light); padding-bottom: 5px;">Formula Student - Chassis Department Lead</h3>
+                        <ul style="margin-top: 1.5vh;">
+                            <li><strong>Team Coordination:</strong> Managed timeline, tasks and planning for structured groups.</li>
+                            <li><strong>Structural Manufacturing:</strong> Designed and validated metallic/composite chassis frames.</li>
+                            <li><strong>Tight Timelines:</strong> Executed hardware deliverables under absolute deadline pressure.</li>
+                        </ul>
                     </div>
 
-                    <div style="display: flex; flex-direction: column;">
-                        <div class="img-box" style="height: 100%;">600 × 400</div>
+                    <div class="card content-box">
+                        <h3 style="font-size: 12.5pt; color: var(--accent); border-bottom: 1px solid var(--border-light); padding-bottom: 5px;">Oxford Brookes Racing - Structures & Composites</h3>
+                        <ul style="margin-top: 1.5vh;">
+                            <li><strong>Carbon Fibre Processing:</strong> Practical work in composite lamination, vacuum bagging.</li>
+                            <li><strong>Composite Inspection & NDT:</strong> Implemented structures quality verification checks.</li>
+                            <li><strong>Tooling Design:</strong> Engineered moulds for high-precision structural assemblies.</li>
+                        </ul>
                     </div>
+                </div>
+
+                <div class="bottom-highlight" style="margin-top: 1vh;">
+                    <span>High Performance Mindset</span>
+                    <p>Demonstrated capacity to deliver optimal engineering outcomes where product safety, precision manufacturing speed, and structural performance are balanced simultaneously.</p>
                 </div>
             </div>
 
@@ -440,11 +427,11 @@
             
             <div class="sub-title-desc">A balanced skillset bridging advanced production methods and quality assurance tools</div>
             
-            <div class="slide-body" style="justify-content: center;">
+            <div class="slide-body">
                 <div class="grid-3">
                     <!-- Column 1 -->
-                    <div class="content-box">
-                        <h3 style="border-bottom: 2px solid var(--primary); padding-bottom: 5px; margin-bottom: 2vh;">Manufacturing</h3>
+                    <div class="card content-box">
+                        <h3 style="border-bottom: 2px solid var(--primary); padding-bottom: 8px; margin-bottom: 2vh;">Manufacturing</h3>
                         <ul>
                             <li><strong>Industrialisation:</strong> Seamless integration from drawing to physical system execution.</li>
                             <li><strong>Process Validation:</strong> Verification of machine inputs, setup, and stability metrics.</li>
@@ -455,8 +442,8 @@
                     </div>
 
                     <!-- Column 2 -->
-                    <div class="content-box">
-                        <h3 style="border-bottom: 2px solid var(--primary); padding-bottom: 5px; margin-bottom: 2vh;">Quality Assurance</h3>
+                    <div class="card content-box" style="border-left-color: var(--accent);">
+                        <h3 style="border-bottom: 2px solid var(--accent); padding-bottom: 8px; margin-bottom: 2vh;">Quality Assurance</h3>
                         <ul>
                             <li><strong>Root Cause Analysis:</strong> Proficient with Ishikawa diagrams, 5-Whys, 8D.</li>
                             <li><strong>FMEA Methodologies:</strong> Designing out process failure risks preemptively.</li>
@@ -467,8 +454,8 @@
                     </div>
 
                     <!-- Column 3 -->
-                    <div class="content-box">
-                        <h3 style="border-bottom: 2px solid var(--primary); padding-bottom: 5px; margin-bottom: 2vh;">Materials & Structures</h3>
+                    <div class="card content-box">
+                        <h3 style="border-bottom: 2px solid var(--primary); padding-bottom: 8px; margin-bottom: 2vh;">Materials & Structures</h3>
                         <ul>
                             <li><strong>Composite Fabrication:</strong> In-depth knowledge of carbon/epoxy layups and cures.</li>
                             <li><strong>Aerospace Metallurgy:</strong> Structural checks, welding parameters, and finishes.</li>
@@ -497,10 +484,10 @@
             <div class="sub-title-desc">Establishing professional and geographic alignment for long-term career growth</div>
             
             <div class="slide-body">
-                <div class="grid-2" style="margin-bottom: 3vh;">
-                    <div class="content-box">
-                        <h3>Why France (Toulouse)?</h3>
-                        <ul>
+                <div class="grid-2">
+                    <div class="card content-box">
+                        <h3 style="color: var(--accent);">Why France (Toulouse)?</h3>
+                        <ul style="margin-top: 1vh;">
                             <li><strong>Global Aerospace Capital:</strong> Strong interest in building a long-term engineering career within France's world-leading aerospace cluster.</li>
                             <li><strong>International Programmes:</strong> Eager to coordinate with multi-national aircraft manufacturing platforms.</li>
                             <li><strong>Language Progression:</strong> Deep motivation to immerse, collaborate, and reach total fluency in business French.</li>
@@ -508,9 +495,9 @@
                         </ul>
                     </div>
 
-                    <div class="content-box">
-                        <h3>Why ALTEN?</h3>
-                        <ul>
+                    <div class="card content-box">
+                        <h3 style="color: var(--accent);">Why ALTEN?</h3>
+                        <ul style="margin-top: 1vh;">
                             <li><strong>Project Diversity:</strong> Direct exposure to world-class OEMs and top-tier aerospace suppliers across multi-year contracts.</li>
                             <li><strong>Global Engineering Hub:</strong> Integrating into a highly technical, international team sharing top engineering standards.</li>
                             <li><strong>Growth Environment:</strong> Perfect alignment with ALTEN's focus on manufacturing, quality, and structural processes.</li>
